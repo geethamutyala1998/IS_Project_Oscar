@@ -50,26 +50,36 @@
         <script>
 
       var isClose=true;
-        const stopwords = ["of", "the", "a", "an", "any", "is", "can", "who", "what", "why", "whom","won","which","award","did","oscaraward","best","2023"];
+        const stopwords = ["of", "the", "a", "an", "any", "is", "can", "who", "what", "why", "whom","wins","which","award","did","oscaraward","best","2023","for","goes","?","number","awards"];
         var editor = "sorts\n" +
             "    #category = {picture,originalsong,sound,costumedesign,visualeffects}.\n" +
-            "    #movies ={womentalking,rrr,topgun,blackpanther,avatar,batman}.\n" +
+            "    #movies ={womentalking,topgun,blackpanther,avatar,batman,everythingeverywhereallatonce,thewhale,rrr}.\n" +
+            "    #nominations ={one,two,three,four,five,six,seven,eight,nine,ten,eleven}.\n" +
             "predicates\n" +
             "    oscar(#category, #movies).\n" +
-            "    wins(#movies).\n" +
+            "    won(#movies).\n" +
             "    nominated(#movies).\n" +
             "    lost(#movies).\n" +
+            "    nomination(#nominations,#movies).\n" +
+            "    grabbed(#nominations,#movies).\n" +
             "rules\n" +
-            "    oscar(picture,womentalking).\n" +
+      "    oscar(picture,womentalking).\n" +
 			"    oscar(costumedesign,blackpanther).\n" +
 			"    oscar(visualeffects,avatar).\n" +
-            "    oscar(originalsong,rrr).\n" +
+            
             "    oscar(sound,topgun).\n" +
-            "    wins(rrr).\n" +
-			"    wins(avatar).\n" +
+            
+			"    won(avatar).\n" +
+      "    won(rrr).\n" +
             "    nominated(batman).\n" +
 			"    nominated(womentalking).\n" +
-			"    nominated(rrr).\n" +
+      "    nominated(rrr).\n" +
+			"    nomination(eleven,everythingeverywhereallatonce).\n" +
+      "    nomination(eleven,everythingeverywhereallatonce).\n" +
+      "    nomination(four,avatar).\n" +
+      "    nomination(six,topgun).\n" +
+      "    grabbed(four,everythingeverywhereallatonce).\n" +
+      "    grabbed(two,thewhale).\n" +
 			"    nominated(batman).\n" +
             "    lost(batman).";
         // sorts
@@ -123,7 +133,7 @@
         all_predicates.push('speak spanish'); // extra terms
         a = FuzzySet(all_predicates);
 
-      console.log(all_predicates)
+      console.log(all_predicates + " all predicates") 
 
 
       // Speech recognition API
@@ -209,7 +219,8 @@
           success: function(response) {
             console.log(response);
              const answer = response || 'Sorry, I could not find an answer.';
-             /*answerDiv.innerHTML = answer;*/
+             console.log(answer)
+             /answerDiv.innerHTML = answer;/
              answerBox.innerHTML = answer;
           },
           error: function(xhr, status, error) {
